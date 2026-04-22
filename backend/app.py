@@ -22,12 +22,12 @@ def get_tasks():
     tasks = []
     for row in rows:
         tasks.append({
-            "id": row[0],
-            "name": row[1],
-            "description": row[2],
-            "done": bool(row[3])
-        })
-
+    "id": row[0],
+    "name": row[1],
+    "description": row[2],
+    "done": bool(row[3]),
+    "priority": row[4]
+})
     return jsonify(tasks)
 
 
@@ -39,9 +39,9 @@ def add_task():
     cursor = conn.cursor()
 
     cursor.execute(
-        "INSERT INTO tasks (name, description, done) VALUES (?, ?, ?)",
-        (data["name"], data["description"], 0)
-    )
+    "INSERT INTO tasks (name, description, done, priority) VALUES (?, ?, ?, ?)",
+    (data["name"], data["description"], 0, data["priority"])
+)
 
     conn.commit()
     conn.close()

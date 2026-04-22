@@ -9,10 +9,8 @@ async function loadTasks() {
 
     data.forEach(task => {
         const li = document.createElement("li");
-        li.innerHTML = `
-            ${task.name} - ${task.description}
-            <button onclick="deleteTask(${task.id})">Delete</button>
-        `;
+        li.innerHTML = `${task.name} - ${task.description} - Priority: ${task.priority}
+    <button onclick="deleteTask(${task.id})">Delete</button>`;
         list.appendChild(li);
     });
 }
@@ -20,16 +18,18 @@ async function loadTasks() {
 async function addTask() {
     const name = document.getElementById("name").value;
     const desc = document.getElementById("desc").value;
+    const priority = document.getElementById("priority").value;
 
     await fetch(API, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-            name: name,
-            description: desc
-        })
+       body: JSON.stringify({
+    name: name,
+    description: desc,
+    priority: priority
+})
     });
 
     loadTasks();
